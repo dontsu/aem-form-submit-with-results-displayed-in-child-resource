@@ -1,0 +1,40 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
+<sly data-sly-call="${clientlib.css @ categories='demoform.customform'}"/>
+<sly data-sly-call="${clientlib.js @ categories='demoform.customform'}"/>
+
+
+<div>
+    <sly data-sly-test="${wcmmode.edit}">
+        <h5>${'Edit Demo Form Component' @i18n}</h5>
+    </sly>
+    <sly data-sly-include="/libs/wcm/core/components/init/init.jsp"/>
+    <sly data-sly-use.resultJson="com.demoformsubmit.core.models.DemoFormModel"/>
+
+    <div id="breach-detection"
+         data-sly-use.model="com.demoformsubmit.core.models.DemoFormResultModel">
+
+        <div id="search-form" class="search-form form-group formGroup ${resultJson.rawJson != null ? 'hidden' : ''}">
+            <form id="first-search-form" method="get" action="/bin/demo/search" onsubmit="return validateSomething()">
+                <div class="input-with-label">
+                    <input type="text" id="email1" name="email1" class="form-control email-form-control"
+                           placeholder="${model.additionalEmailsCounter}"
+                           onfocusin="${'validateTheForm' @ context='scriptToken'}('first-search-form')"
+                           onfocusout="${'validateTheForm' @ context='scriptToken'}('first-search-form')"/>
+                    <div class="errorMsg hidden">Required</div>
+                </div>
+                <input type="hidden" name="redirect" value="${currentPage.path}"/>
+
+
+                <input id="search-breaches" type="submit" title="Submit"
+                       class="form-control" value="Search"/>
+            </form>
+        </div>
+        <div id="search-results"
+             class="search-results ${resultJson.rawJson == null ? 'hidden' : ''}"
+             data-sly-resource="${'/results' @prependPath=currentPage.path}"
+             data-sly-use="${'../../utils/setResults.js' @ model = model, results = resultJson.rawJson}">
+
+        </div>
+    </div>
+</div>
+

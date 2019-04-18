@@ -1,0 +1,4 @@
+function validateSomething(){
+
+    alert("validated");
+}

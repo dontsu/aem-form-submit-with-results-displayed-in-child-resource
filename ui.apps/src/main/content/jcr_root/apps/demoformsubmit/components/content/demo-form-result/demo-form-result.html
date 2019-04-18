@@ -1,0 +1,18 @@
+<sly data-sly-use.clientlibChild="/libs/granite/sightly/templates/clientlib.html"/>
+<sly data-sly-call="${clientlibChild.css @ categories='demoform.customformresult'}"/>
+<sly data-sly-call="${clientlibChild.js @ categories='demoform.customformresult'}"/>
+
+<div id="search-results" class="search-results"
+     data-sly-use.parentObjects="${'../../utils/getResults.js'}">
+   This is some object from parent model:  ${parentObjects.model.additionalEmailsCounter}
+    <div class="results-form-one no-padding">
+        <div class="results-form ${parentObjects.jsonResults.data.length == 0 ? 'hidden' : ''}">
+            <div class="result-title">We found your info</div>
+            <div id="result-list-container">
+                <div class="result-list" data-sly-list.resultItem="${parentObjects.jsonResults.data}">
+                            ${resultItem}
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
